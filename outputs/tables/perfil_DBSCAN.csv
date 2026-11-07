@@ -1,0 +1,6 @@
+,Recency,Recency,Frequency,Frequency,Monetary,Monetary,Clientes
+,mean,median,mean,median,mean,median,
+DBSCAN,,,,,,,
+-1,129.8,23.0,65.5,35.0,74956.6,35008.2,66
+0,143.1,60.0,7.4,5.0,2924.6,1376.3,4196
+1,355.6,388.0,1.0,1.0,324.8,231.8,1616
