@@ -1,25 +1,3 @@
-Claude
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Readme · MD
 # Segmentação de consumidores com aprendizado não supervisionado
  
 Identificação de perfis de consumidores no comércio eletrônico a partir de dados transacionais (Online Retail II), comparando os algoritmos **K-Means** e **DBSCAN** sobre variáveis **RFM** (Recência, Frequência e Valor Monetário).

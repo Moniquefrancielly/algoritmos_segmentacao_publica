@@ -6,8 +6,8 @@ Documento com os procedimentos e parâmetros efetivamente executados, para uso n
 
 - Base: Online Retail II (UCI Machine Learning Repository)
 - Arquivo: `online_retail_II.xlsx`, com duas abas (2009-2010 e 2010-2011), concatenadas
-- Primeira transação: [PREENCHER]
-- Última transação: [PREENCHER]
+- Primeira transação: 2009-12-01 07:45
+- Última transação: 2011-12-09 12:50
 - Registros brutos: 1.067.371
 
 ## 2. Limpeza dos dados (`src/01_limpeza.py`)
@@ -24,7 +24,7 @@ Documento com os procedimentos e parâmetros efetivamente executados, para uso n
 
 ## 3. Engenharia de características: RFM (`src/02_rfm.py`)
 
-- Data de referência: [PREENCHER] (um dia após a última transação)
+- Data de referência: 2011-12-10 (um dia após a última transação)
 - Recency: dias entre a data de referência e a última compra do cliente
 - Frequency: número de faturas distintas do cliente
 - Monetary: soma de `TotalPrice` do cliente
