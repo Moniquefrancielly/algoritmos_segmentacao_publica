@@ -24,6 +24,7 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
  
 ```
 .
+├── artigo/                       # versão final do artigo (IEEE) em PDF 
 ├── data/
 │   ├── raw/                      # online_retail_II.xlsx (baixar da UCI, não versionado)
 │   └── processed/                # dados intermediários e resultados dos grupos
@@ -42,6 +43,7 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 ├── registro.md                   # registro de procedimentos e parâmetros executados
 ├── requirements.txt
 ├── .gitignore
+├── LICENSE
 └── README.md
 ```
  
