@@ -280,4 +280,3 @@ Python, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn e OpenPyXL.
  
 O arquivo [`registro.md`](registro.md) detalha todos os procedimentos e parâmetros efetivamente executados, e serve de base para a seção de metodologia do artigo.
  
-Claude terminou a resposta
