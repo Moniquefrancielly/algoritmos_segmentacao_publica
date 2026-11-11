@@ -2,7 +2,7 @@
  
 Identificação de perfis de consumidores no comércio eletrônico a partir de dados transacionais (Online Retail II), comparando os algoritmos **K-Means** e **DBSCAN** sobre variáveis **RFM** (Recência, Frequência e Valor Monetário).
  
-Este repositório contém a parte de **implementação e análise computacional** do artigo: limpeza dos dados, construção do RFM, normalização, agrupamento, métricas de avaliação, estabilidade e perfis dos grupos.
+Este repositório contém a parte de **implementação e análise computacional** do artigo: limpeza dos dados, construção do RFM, normalização, agrupamento, métricas de avaliação, estabilidade, perfis dos grupos e análise de robustez.
  
 ---
  
@@ -39,8 +39,8 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 │   ├── 01_limpeza.py
 │   ├── 02_rfm.py
 │   ├── 03_clustering.py
-│   └── 04_avaliacao.py
-│   ├── 05_robustez.py
+│   ├── 04_avaliacao.py
+│   └── 05_robustez.py
 ├── registro.md                   # registro de procedimentos e parâmetros executados
 ├── requirements.txt
 ├── .gitignore
@@ -58,6 +58,7 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 | `02_rfm.py` | Calcula Recência, Frequência e Valor Monetário por cliente | `limpo.csv` | `data/processed/rfm.csv` |
 | `03_clustering.py` | Aplica `log1p` + `StandardScaler`, escolhe k (cotovelo e Silhouette), executa K-Means e DBSCAN | `rfm.csv` | `X.npy`, `rfm_clusters.csv`, `kmeans_escolha_k.csv`, 2 figuras |
 | `04_avaliacao.py` | Calcula métricas, estabilidade, concordância entre algoritmos, perfis dos grupos e gráficos | `rfm_clusters.csv`, `X.npy` | tabelas e figuras finais |
+| `05_robustez.py` | Testa a sensibilidade do DBSCAN ao `min_samples` e a estabilidade do K-Means (k=4) ao trocar as variáveis (ARI) | `rfm_clusters.csv`, `limpo.csv`, `X.npy` | `robustez_min_samples.csv`, `robustez_variaveis.csv` |
  
 ### Definição das variáveis RFM
  
@@ -125,6 +126,7 @@ python src/01_limpeza.py
 python src/02_rfm.py
 python src/03_clustering.py
 python src/04_avaliacao.py
+python src/05_robustez.py
 ```
  
 ---
@@ -192,6 +194,8 @@ Imprime a tabela de métricas, o ARI de estabilidade do K-Means (≈ 0,995 ± 0,
 | `sensibilidade.csv` | Métricas do K-Means variando k (2 a 8) e do DBSCAN variando eps (0,2 a 0,6) |
 | `perfil_KMeans.csv` | Média e mediana de R, F e M, e tamanho de cada grupo do K-Means |
 | `perfil_DBSCAN.csv` | Idem, para o DBSCAN (inclui o grupo de ruído `-1`) |
+| `robustez_min_samples.csv` | Sensibilidade do DBSCAN ao `min_samples` (4 a 12, com eps = 0,5) |
+| `robustez_variaveis.csv` | ARI do K-Means (k=4) ao trocar o conjunto de variáveis |
  
 ### Figuras (`outputs/figures/`)
  
@@ -213,6 +217,7 @@ Imprime a tabela de métricas, o ARI de estabilidade do K-Means (≈ 0,995 ± 0,
 | K-Means | `n_init=10`; k testado de 2 a 10; **k adotado = 4** |
 | DBSCAN | `eps=0.5`, `min_samples=6`, distância euclidiana |
 | Estabilidade | ARI entre execuções do K-Means com sementes de 1 a 10 |
+| Robustez | min_samples de 4 a 12; subconjuntos RF, RM, FM e RFM com ticket médio ou produtos |
  
 **Sobre a escolha de k:** o Silhouette indica k = 2 (0,438), mas adotou-se k = 4 pela interpretabilidade dos perfis (Silhouette 0,365). Essa é uma decisão do pesquisador, documentada no `registro.md`. Para trocar o k, edite a linha `k_final = 4` em `src/03_clustering.py` e rode novamente os scripts 03 e 04.
  
