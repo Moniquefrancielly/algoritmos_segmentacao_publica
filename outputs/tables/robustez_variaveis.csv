@@ -1,0 +1,7 @@
+Variáveis,ARI vs RFM base,Silhouette
+RFM (base),1.0,0.365
+RF,0.604,0.436
+RM,0.706,0.384
+FM,0.356,0.435
+RFM + TicketMedio,0.43,0.281
+RFM + Produtos,0.686,0.31
