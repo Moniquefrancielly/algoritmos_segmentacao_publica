@@ -54,7 +54,12 @@ Documento com os procedimentos e parâmetros efetivamente executados, para uso n
 | 10 | 0,2918 |
 
 - k indicado pelo Silhouette: **2**
-- k adotado na análise de perfis: **4**, escolhido pela interpretabilidade dos grupos (decisão do pesquisador, não do critério estatístico)
+- k adotado na análise de perfis: **4**, escolhido pela interpretabilidade dos grupos (decisão dos pesquisadores, não do critério estatístico)
+- Justificativa do k = 4: o Silhouette foi máximo em k = 2 (0,438), que separa apenas
+  clientes ativos de inativos. Entre k ≥ 3, o maior valor ocorre em k = 4 (0,365, contra
+  0,348 em k = 3 e 0,342 em k = 5). Adotou-se k = 4 por ser esse máximo local e por gerar
+  perfis mais interpretáveis, ao custo de uma queda de 0,073 no Silhouette em relação a k = 2.
+  A decisão é dos autores, não do critério estatístico.
 
 ## 6. DBSCAN
 
@@ -70,6 +75,20 @@ Documento com os procedimentos e parâmetros efetivamente executados, para uso n
 | 99 | 0,663 |
 
 - Resultado: 2 grupos (4.196 e 1.616 clientes) e 66 clientes classificados como ruído (1,12%)
+- Justificativa do `min_samples = 6`: regra prática de 2 × número de dimensões
+  (2 × 3 variáveis), citada na literatura de DBSCAN (Sander et al., 1998).
+- Sensibilidade ao `min_samples` (eps fixo em 0,5; `outputs/tables/robustez_min_samples.csv`):
+
+| min_samples | Nº grupos | Ruído (%) | Silhouette |
+|---|---|---|---|
+| 4 | 2 | 1,00 | 0,278 |
+| 6 | 2 | 1,12 | 0,279 |
+| 8 | 2 | 1,29 | 0,278 |
+| 10 | 2 | 1,48 | 0,278 |
+| 12 | 2 | 1,55 | 0,278 |
+
+  O resultado manteve-se em 2 grupos em toda a faixa testada, indicando pouca sensibilidade
+  a esse parâmetro (com eps fixo).
 
 ## 7. Métricas de avaliação (`outputs/tables/metricas.csv`)
 
@@ -86,7 +105,26 @@ Observações:
 
 - Estabilidade do K-Means entre sementes: ARI médio de **0,995 ± 0,002** (10 sementes, de 1 a 10, comparadas à execução base com semente 42)
 - Concordância K-Means × DBSCAN: ARI de **0,150** (apenas pontos não ruído)
-- Sensibilidade a parâmetros: K-Means com k de 2 a 8 e DBSCAN com eps de 0,2 a 0,6 (`outputs/tables/sensibilidade.csv`)
+- - Sensibilidade a parâmetros: K-Means com k de 2 a 8 e DBSCAN com eps de 0,2 a 0,6 (`outputs/tables/sensibilidade.csv`). Essa análise descreve como as métricas variam, mas não mede a estabilidade das partições.
+- Estabilidade do K-Means (k = 4) a mudanças nas variáveis (`src/05_robustez.py`,
+  `outputs/tables/robustez_variaveis.csv`). Mesma transformação (log1p + StandardScaler),
+  ARI em relação à partição do RFM base: 
+
+| Variáveis | ARI vs RFM base |
+|---|---|
+| RFM (base) | 1,000 |
+| RF | 0,604 |
+| RM | 0,706 |
+| FM | 0,356 |
+| RFM + ticket médio | 0,430 |
+| RFM + produtos | 0,686 |
+
+- O ARI = 1,000 na linha base confirma que o script reproduz a partição original.
+- Leitura: a omissão da Recência (FM) foi a que mais alterou os grupos. O ticket médio é
+  função de variáveis já presentes (em log, log M − log F), então o ARI menor reflete mudança
+  de pesos, não informação nova.
+- O Silhouette dessa tabela não é comparável entre as linhas, pois cada uma usa um espaço
+  de variáveis diferente.
 
 ## 9. Perfis encontrados (medianas)
 
@@ -109,10 +147,13 @@ Observações:
 
 ## 10. Ambiente
 
-- Python 3.14
-- Bibliotecas e versões: ver `requirements.txt`
+- Scripts 01 a 04: Python 3.14 (ver `requirements.txt` para as bibliotecas)
+- Script 05 (`05_robustez.py`), executado em outra máquina: Python 3.14.7, pandas 3.1.1,
+  numpy 2.5.4, scikit-learn 1.9.1, scipy 1.18.1, matplotlib 3.11.2, seaborn 0.13.2
+  e openpyxl 3.1.5
 - Semente aleatória: 42
-- Ordem de execução: `01_limpeza.py` → `02_rfm.py` → `03_clustering.py` → `04_avaliacao.py`
+- Ordem de execução: `01_limpeza.py` → `02_rfm.py` → `03_clustering.py` →
+  `04_avaliacao.py` → `05_robustez.py`
 
 ## 11. Achados principais
 
@@ -120,3 +161,6 @@ Observações:
 - O K-Means é estável entre sementes (ARI próximo de 1).
 - O DBSCAN separa os clientes de compra única e isola os clientes de altíssimo valor como ruído, mas não divide a base ativa.
 - A concordância entre os dois algoritmos é baixa (ARI 0,150), pois eles capturam estruturas diferentes.
+- O DBSCAN é pouco sensível ao `min_samples` (4 a 12, com eps = 0,5), mas muito sensível ao `eps`.
+- Os perfis do K-Means são moderadamente estáveis a mudanças nas variáveis (ARI de 0,36 a 0,71);
+  a omissão da Recência foi a que mais os alterou.
