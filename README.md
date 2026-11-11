@@ -40,6 +40,7 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 │   ├── 02_rfm.py
 │   ├── 03_clustering.py
 │   └── 04_avaliacao.py
+│   ├── 05_robustez.py
 ├── registro.md                   # registro de procedimentos e parâmetros executados
 ├── requirements.txt
 ├── .gitignore
