@@ -40,7 +40,9 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 │   ├── 02_rfm.py
 │   ├── 03_clustering.py
 │   ├── 04_avaliacao.py
-│   └── 05_robustez.py
+│   ├── 05_robustez.py
+│   ├── 06_k2.py
+│   └── 07_escolha_k.py
 ├── registro.md                   # registro de procedimentos e parâmetros executados
 ├── requirements.txt
 ├── .gitignore
@@ -59,6 +61,8 @@ Como diferentes algoritmos de aprendizado não supervisionado identificam e dife
 | `03_clustering.py` | Aplica `log1p` + `StandardScaler`, escolhe k (cotovelo e Silhouette), executa K-Means e DBSCAN | `rfm.csv` | `X.npy`, `rfm_clusters.csv`, `kmeans_escolha_k.csv`, 2 figuras |
 | `04_avaliacao.py` | Calcula métricas, estabilidade, concordância entre algoritmos, perfis dos grupos e gráficos | `rfm_clusters.csv`, `X.npy` | tabelas e figuras finais |
 | `05_robustez.py` | Testa a sensibilidade do DBSCAN ao `min_samples` e a estabilidade do K-Means (k=4) ao trocar as variáveis (ARI) | `rfm_clusters.csv`, `limpo.csv`, `X.npy` | `robustez_min_samples.csv`, `robustez_variaveis.csv` |
+| `06_k2.py` | Calcula o perfil (medianas) do K-Means com k = 2 e o cruzamento com os grupos de k = 4| `rfm_clusters.csv`, `X.npy` | impressão no terminal |
+| `07_escolha_k.py` | Calcula, para k de 2 a 8, as métricas internas e a estabilidade por reamostragem (20 subamostras de 80%, ARI) | `X.npy` | `escolha_k_completa.csv` |
  
 ### Definição das variáveis RFM
  
@@ -127,6 +131,8 @@ python src/02_rfm.py
 python src/03_clustering.py
 python src/04_avaliacao.py
 python src/05_robustez.py
+python src/06_k2.py
+python src/07_escolha_k.py
 ```
  
 ---
@@ -196,6 +202,7 @@ Imprime a tabela de métricas, o ARI de estabilidade do K-Means (≈ 0,995 ± 0,
 | `perfil_DBSCAN.csv` | Idem, para o DBSCAN (inclui o grupo de ruído `-1`) |
 | `robustez_min_samples.csv` | Sensibilidade do DBSCAN ao `min_samples` (4 a 12, com eps = 0,5) |
 | `robustez_variaveis.csv` | ARI do K-Means (k=4) ao trocar o conjunto de variáveis |
+| `escolha_k_completa.csv` | Inércia, Silhouette, Davies-Bouldin, Calinski-Harabasz e ARI de reamostragem (média e desvio-padrão) para k de 2 a 8 |
  
 ### Figuras (`outputs/figures/`)
  

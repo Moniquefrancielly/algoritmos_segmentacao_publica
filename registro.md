@@ -60,6 +60,8 @@ Documento com os procedimentos e parâmetros efetivamente executados, para uso n
   0,348 em k = 3 e 0,342 em k = 5). Adotou-se k = 4 por ser esse máximo local e por gerar
   perfis mais interpretáveis, ao custo de uma queda de 0,073 no Silhouette em relação a k = 2.
   A decisão é dos autores, não do critério estatístico.
+  - Perfil de k = 2 (medianas): grupo 0, 2.352 clientes (40,0%), recência 24 dias, frequência 8, Monetary £ 2.871,5; grupo 1, 3.526 clientes (60,0%), recência 295,5 dias, frequência 2, Monetary £ 418,1. Separa clientes mais engajados dos menos engajados.
+- Tabela cruzada com k = 4: os grupos 0 e 1 estão contidos integralmente em cada grupo de k = 2; os grupos 2 e 3 se dividem entre os dois (592/873 e 572/679).
 
 ## 6. DBSCAN
 
